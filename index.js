@@ -23,8 +23,8 @@ app.get('/location', (req, res) => {
 app.post('/location', (req, res) => {
     
     console.log(req);
-    lat = req.body.location.lat
-    long = req.body.location.long
+    lat = req.body.lat
+    long = req.body.long
     //res.send("Latitude: " + lat + "\tLongitude: " + long)
     res.status(200).send()
     console.log("Latitude: " + lat + "\tLongitude: " + long)
