@@ -9,8 +9,10 @@ let lat = 0;
 let long = 0;
 let satellites = 0;
 let accuracy = "";
+let hdop = ""
 
 const decodeHDOP = (hdopValue) => {
+    
     if(hdopValue < 1){
         return "Ideal"
     }
@@ -44,7 +46,8 @@ app.get('/location', (req, res) => {
     res.send(
         'https://maps.google.com/?q='+lat+","+long
         +"\n Connected satellites: "+satellites
-        +"\n Accuracy: " + accuracy
+        +"\n Accuracy: " + accuracy 
+        +"\n HDOP: " + hdop
     )
 })
 
@@ -54,6 +57,7 @@ app.post('/location', (req, res) => {
     long = req.body.long
     satellites = req.body.satellites
     accuracy = decodeHDOP(req.body.hdop)
+    hdop = req.body.hdop
     //res.send("Latitude: " + lat + "\tLongitude: " + long)
     res.status(200).send()
     console.log("Latitude: " + lat + "\tLongitude: " + long)
