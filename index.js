@@ -46,8 +46,7 @@ app.get('/location', (req, res) => {
     res.send(
         'https://maps.google.com/?q='+lat+","+long
         +"\n Connected satellites: "+satellites
-        +"\n Accuracy: " + accuracy 
-        +"\n HDOP: " + hdop
+        +"\n Accuracy: " + accuracy
     )
 })
 
@@ -56,7 +55,7 @@ app.post('/location', (req, res) => {
     lat = req.body.lat
     long = req.body.long
     satellites = req.body.satellites
-    accuracy = decodeHDOP(req.body.hdop)
+    accuracy = decodeHDOP(req.body.hdop*0.01)
     hdop = req.body.hdop
     //res.send("Latitude: " + lat + "\tLongitude: " + long)
     res.status(200).send()
