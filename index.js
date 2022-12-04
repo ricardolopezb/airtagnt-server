@@ -7,9 +7,9 @@ app.use(bodyParser.json());
 
 let lat = 0;
 let long = 0;
-let satellites = 0;
-let accuracy = "";
-let hdop = ""
+let satellites = 0
+let datetime = ""
+let accuracy = ""
 
 const decodeHDOP = (hdopValue) => {
     
@@ -38,12 +38,9 @@ app.listen(8080, () => {
     console.log("Started in port 8080")
 })
 
-app.get('/getGreeting', function (req, res) {
-    res.send('Saludos desde express');
-});
-
 app.get('/location', (req, res) => {
     res.send(
+        "DateTime: " + datetime + "\n" +
         'https://maps.google.com/?q='+lat+","+long
         +"\n Connected satellites: "+satellites
         +"\n Accuracy: " + accuracy
@@ -56,9 +53,17 @@ app.post('/location', (req, res) => {
     long = req.body.long
     satellites = req.body.satellites
     accuracy = decodeHDOP(req.body.hdop*0.01)
-    hdop = req.body.hdop
     //res.send("Latitude: " + lat + "\tLongitude: " + long)
     res.status(200).send()
     console.log("Latitude: " + lat + "\tLongitude: " + long)
+
+    datetime = setDateTime()
 })
+
+const setDateTime = () => {
+    const date = new Date()
+    return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + 
+            " - " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+
+}
 
